@@ -1,0 +1,86 @@
+---
+# ssh_config is meant as a work around for certain Centos versions, it may be excluded
+:ssh_config: &ssh_config
+  :type: inline
+  :vars:
+    -
+     :ssh_pub_key: <% = File.readlines("#{Dir.home}/.ssh/vagrant_id_rsa.pub").first.strip %>
+  :script: |
+    <<-SHELL
+      echo #{ssh_pub_key} >> /home/vagrant/.ssh/authorized_keys
+    SHELL
+# login_as_deploy is meant as a way to connect as a deploy user for such setups
+:login_as_deploy: &login_as_deploy
+  :type: inline
+  :script: |
+    <<-EOF
+      if [ ! -f /home/vagrant/.login_as_deploy ] && id -u "deploy" >/dev/null 2>&1; then
+        echo '
+          setfacl -m deploy:x $(dirname "$SSH_AUTH_SOCK")
+          setfacl -m deploy:rwx "$SSH_AUTH_SOCK"
+          sudo -E su deploy
+        ' > /home/vagrant/.login_as_deploy
+        chown vagrant:vagrant /home/vagrant/.login_as_deploy
+        echo "source .login_as_deploy" >> /home/vagrant/.bash_profile
+      fi
+    EOF
+
+:puppet_install: &puppet_install
+  :type: inline
+  :script: |
+    if which puppet > /dev/null 2>&1; then
+      echo 'Puppet Installed.'
+    else
+      echo 'Puppet Installation Script' &&\
+      grep -q 'rvm use system' /root/.bashrc || echo 'rvm use system 2>/dev/null' >> /root/.bashrc && \
+      rpm ivh --replacepkgs --quiet http://yum.puppetlabs.com/puppetlabs-release-el-$( rpm -q --qf "%{VERSION}" $(rpm -q --whatprovides redhat-release ) ).noarch.rpm && \
+      yum install -y -q puppet-3.8.7
+    fi
+:puppet: &puppet
+  :type: puppet
+  :puppet_facters:
+    :organization: devopco
+    :client: devopco
+    :env: development
+    :role: web
+    :sub_role: db
+    :puppet_environment: development
+  :puppet_paths:
+    :modules_dir: "../devopco-puppet/modules"
+    :manifests_path: "../devopco-puppet/manifests"
+    :manifest_file: "site.pp"
+    :hiera_config_file: "../devopco-configs/hiera.yaml"
+
+:provisors: &provisors
+  :provisioners:
+    -
+      <<: *puppet_install
+    -
+      <<: *puppet
+
+:vm_defaults: &vm_defaults
+  :sync_rvm: true
+  :sync_apps: false
+  :box: "devopco/centos-7-2-min"
+  :ram: 1024
+  :cpus: 1
+  :forward_agent: false
+  :auto_nat_dns_proxy: false
+  :natdnshostresolver1: "on"
+  :natdnsproxy1: "on"
+:servers:
+  -
+    <<: *vm_defaults
+    :name: "server01"
+    :hostname: "s01.devopco.lcl"
+    <<: *provisors
+  -
+    <<: *vm_defaults
+    :name: "server02"
+    :hostname: "s02.devopco.lcl"
+    <<: *provisors
+  -
+    <<: *vm_defaults
+    :name: "server03"
+    :hostname: "s03.devopco.lcl"
+    <<: *provisors

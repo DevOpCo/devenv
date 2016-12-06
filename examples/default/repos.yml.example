@@ -1,0 +1,6 @@
+remote_repo_root: "git@github.com"
+default:
+  org_root: "devopco"
+  repos:
+  - devopco-configs
+  - devopco-puppet

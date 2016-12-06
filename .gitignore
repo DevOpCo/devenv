@@ -1,0 +1,5 @@
+config/*.yml
+.rvm-vagrant-sync/*
+
+!.rvm-vagrant-sync/.gitkeep
+!config/.gitkeep

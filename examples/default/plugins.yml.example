@@ -1,0 +1,9 @@
+plugins:
+  default:
+   - vagrant-auto_network
+   - vagrant-hosts
+   - vagrant-share
+   - vagrant-vbguest
+   - aws-sdk
+  user:
+   - vagrant-hostsupdater
