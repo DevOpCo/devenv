@@ -34,17 +34,13 @@ Installation and setup the simple way:
 
 ### Getting started
 
-run `source bin/setup.sh` from the root of this repo.
+run `source bin/setup.sh` from the root of this repo. This will install RVM, the repo gemset, bundler, and run `bundle install` in your current terminal session. That way, you can get started right away with utilizing this repo.
 
-TODO:
-  - Thor tasks to do the following:
-    - copy example files from the `examples/default/` directory and place them in the `config/` directory.
+After running the setup script, you can choose to run `bin/run`, which will output the possible commands configured in the thor scripts:
 
-After running the setup script, you can choose to run the following:
-```
-bin/run
-```
-which will output the possible commands configured in the thor scripts
+ - `bin/run configure -e default` copies example files from the `examples/default/` directory and place them in the `config/` directory.
+ - `bin/run vagrant -o <ORGANIZATION>` sets the ORGANIZATION environment variable.
+ - `bin/run vagrant [-u|-s|-p]` executes `vagrant up|status|provision` respectively
 
 The `Vagrantfile` contains ruby code that will run a `git clone` of the repositories listed in the yaml. These repositories are for configurations and hieradata used in puppet provisioning.
 
