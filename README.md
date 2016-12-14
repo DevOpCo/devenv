@@ -42,8 +42,9 @@ TODO:
 
 After running the setup script, you can choose to run the following:
 ```
-vagrant status
+bin/run
 ```
+which will output the possible commands configured in the thor scripts
 
 The `Vagrantfile` contains ruby code that will run a `git clone` of the repositories listed in the yaml. These repositories are for configurations and hieradata used in puppet provisioning.
 
