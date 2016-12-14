@@ -1,6 +1,7 @@
 remote_repo_root: "git@github.com"
 default:
   org_root: "devopco"
+# Defaults for getting up and running require using devopco repos
   repos:
   - devopco-configs
   - devopco-puppet

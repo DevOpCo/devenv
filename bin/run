@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+# Use this to compare tasks and environments for a given client.
+require 'fileutils'
+require 'thor'
+require 'yaml'
+
+$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib')
+
+require "DevEnv"
+
+if ENV['DEBUG']
+  puts "I was called with #{ARGV.size} arguments: #{ARGV.join(', ')}."
+end
+
+CLI.start(ARGV)
