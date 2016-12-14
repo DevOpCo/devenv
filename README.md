@@ -34,7 +34,11 @@ Installation and setup the simple way:
 
 ### Getting started
 
-run `bash -x bin/setup.sh` from the root of this repo. It will copy the example files from the `examples/default/` directory and place them in the `config/` directory. _In future iterations, the examples directory will contain default configurations for various setups._
+run `source bin/setup.sh` from the root of this repo.
+
+TODO:
+  - Thor tasks to do the following:
+    - copy example files from the `examples/default/` directory and place them in the `config/` directory.
 
 After running the setup script, you can choose to run the following:
 ```
