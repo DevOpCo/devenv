@@ -26,6 +26,24 @@ module Vagrant
         end
       end
 
+      desc "dependencies", "dependencies command"
+      long_desc <<-LONGDESC
+      Runs a check to verify system dependencies are met
+      LONGDESC
+      def dependencies
+        packages=['vagrant', 'virtualbox']
+        missing=[]
+        packages.each do |e|
+          missing << e unless check_dependencies(e)
+        end
+        if !missing.empty?
+          puts "You are missing the following packages:"
+          puts missing.each { |e| e }
+        else
+          puts "Dependencies are installed"
+        end
+      end
+
     end
   end
 end
