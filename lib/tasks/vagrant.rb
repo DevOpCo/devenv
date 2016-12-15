@@ -1,16 +1,31 @@
 module Vagrant
   def self.included(base)
     base.class_eval do
-      desc "vagrant [options]", "vagrant command"
-      option :command, :type => :string, :aliases => "-c"
-      option :setup, :type => :string, :aliases => "-s"
-      option :provision, :type => :string, :aliases => "-p"
+      desc "configure [options]", "configure command"
+      option :example, :type => :string, :aliases => "-e"
       long_desc <<-LONGDESC
-      Runs vagrant and allows for setup through examples directories
+      Setups up vagrant through examples directories as specified
+
+      configure -e <example_directory>
       LONGDESC
-      def vagrant
-        puts "Copies files from examples into config and runs vagrant"
+      def configure
+        valid=valid_configurations?(options[:example])
+        if valid
+          if !(Dir.entries('config/') - %w{ . .. .gitkeep }).empty?
+            question="Caution! Configuration Exist in Directory"
+            answer='Proceed Anyway?'
+            proceed=["Y","Yes","yes","y"]
+            validate_user_input(question, answer, proceed)
+          end
+          Dir.glob("examples/#{options[:example]}/*.yml").each do |cp|
+            FileUtils.cp_r(cp, 'config/')
+          end
+          puts "Configurations copied from the #{options[:example]} examples"
+        else
+          valid
+        end
       end
+
     end
   end
 end
