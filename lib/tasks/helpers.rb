@@ -18,7 +18,7 @@ module Helpers
           if approved.include? input
             return true
           else
-            puts "Only the following configurations are available:"
+            puts "The following configurations are available:"
             puts approved.each { |e| e }
           end
         end
