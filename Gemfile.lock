@@ -2,12 +2,14 @@ GEM
   remote: https://rubygems.org/
   specs:
     thor (0.19.4)
+    vagrant-wrapper (2.0.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   thor
+  vagrant-wrapper
 
 BUNDLED WITH
    1.13.6

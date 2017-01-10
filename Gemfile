@@ -5,3 +5,4 @@ if Gem::Version.new(Bundler::VERSION) < Gem::Version.new(File.read('.bundler-ver
 end
 
 gem 'thor'
+gem 'vagrant-wrapper'
