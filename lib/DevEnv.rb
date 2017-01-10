@@ -1,6 +1,9 @@
 require "rubygems"
 require "bundler"
 require "thor"
+require "fileutils"
+require "yaml"
+require "vagrant-wrapper"
 Bundler.setup
 
 Dir[File.expand_path(File.dirname(__FILE__) + "/tasks/*.rb")].each do |file|
