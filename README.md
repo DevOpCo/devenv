@@ -6,16 +6,16 @@ __Problem__: It doesn't work on your machine.
 
 __Real Problem__: It only works on my machine.
 
-__Truth__: I have no idea how _this_ works
+__Truth__: I have no idea how _It_ works
 
 The way Vagrant configurations are managed requires a level of knowledge of systems, and coding, that might not be intuitive to a new developer or someone coming over from one organization to another within a company. This repo is meant as a bootstrapping option for those looking to find consistency and extensibility in order to develop and understand the extensibility of Vagrant. It provides a low risk, low cost option to creating a production-like environment for any given project.
 
-# Requirements
+# Requirements/Dependencies
 
  - Virtualbox
  - Vagrant
 
-Installation and setup the simple way:
+Installation and setup of dependencies the simple way:
 
 ## macos
   Install [homebrew](http://brew.sh)
