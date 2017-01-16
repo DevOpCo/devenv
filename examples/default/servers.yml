@@ -9,6 +9,7 @@
     <<-SHELL
       echo #{ssh_pub_key} >> /home/vagrant/.ssh/authorized_keys
     SHELL
+
 # login_as_deploy is meant as a way to connect as a deploy user for such setups
 :login_as_deploy: &login_as_deploy
   :type: inline
@@ -36,6 +37,7 @@
       rpm ivh --replacepkgs --quiet http://yum.puppetlabs.com/puppetlabs-release-el-$( rpm -q --qf "%{VERSION}" $(rpm -q --whatprovides redhat-release ) ).noarch.rpm && \
       yum install -y -q puppet-3.8.7
     fi
+
 :puppet: &puppet
   :type: puppet
   :puppet_facters:
@@ -57,7 +59,7 @@
       <<: *puppet_install
     -
       <<: *puppet
-
+# Edit vm defaults here, i.e. RAM, CPUs etc.
 :vm_defaults: &vm_defaults
   :sync_rvm: true
   :sync_apps: false
@@ -68,6 +70,8 @@
   :auto_nat_dns_proxy: false
   :natdnshostresolver1: "on"
   :natdnsproxy1: "on"
+
+# Specify server names and roles here
 :servers:
   -
     <<: *vm_defaults
